@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MIPT_2Lab</string>
+
+    <string-array name="choices">
+        <item>Žodžiai</item>
+        <item>Simboliai</item>
+    </string-array>
 </resources>
