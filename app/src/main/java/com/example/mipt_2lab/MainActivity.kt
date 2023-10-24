@@ -1,6 +1,5 @@
 package com.example.mipt_2lab
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -40,10 +39,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main)
         val counterType = resources.getStringArray(R.array.choices)
-        val counterInput : EditText = findViewById(R.id.editText)
-        val buttonStatus : Button = findViewById(R.id.button1)
-        val answer : TextView = findViewById(R.id.textView)
-        val spinner = findViewById<Spinner>(R.id.spinner)
+        val counterInput : EditText = findViewById(R.id.inputText)
+        val buttonStatus : Button = findViewById(R.id.counterButton)
+        val answer : TextView = findViewById(R.id.answerView)
+        val spinner = findViewById<Spinner>(R.id.typeSpinner)
         if (spinner != null)
         {
             val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, counterType)
