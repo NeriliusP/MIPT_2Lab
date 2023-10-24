@@ -8,12 +8,28 @@ import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.activity.ComponentActivity
 
-class wordCount()
+class WordCount()
 {
     fun count(input: String): Int
     {
         val words = input.split("\\w+".toRegex())
         val count = words.count() - 1
+        return count
+    }
+}
+class SymbolCount()
+{
+    fun count(input: String): Int
+    {
+        var count = 0
+        for (i in 0..input.length - 1)
+        {
+            val ch = input[i]
+            if (ch != ' ')
+            {
+                ++count
+            }
+        }
         return count
     }
 }
@@ -48,7 +64,7 @@ class MainActivity : ComponentActivity() {
                             else
                             {
                                answer.setTextColor(Color.BLACK)
-                               answer.text = "Žodžių kiekis duotame tekste: " + wordCount().count(counterInputError).toString()
+                               answer.text = "Žodžių kiekis duotame tekste: " + WordCount().count(counterInputError).toString()
                             }
                         }
                     }
@@ -60,6 +76,11 @@ class MainActivity : ComponentActivity() {
                             {
                                 answer.setTextColor(Color.RED)
                                 answer.text = "Klaida. Įvesties laukas yra tuščias."
+                            }
+                            else
+                            {
+                                answer.setTextColor(Color.BLACK)
+                                answer.text = "Simbolių kiekis duotame tekste: " + SymbolCount().count(counterInputError).toString()
                             }
                         }
                     }
