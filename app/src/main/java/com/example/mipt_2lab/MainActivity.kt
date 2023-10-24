@@ -1,20 +1,22 @@
 package com.example.mipt_2lab
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import android.view.View
 import android.widget.*
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.mipt_2lab.ui.theme.MIPT_2LabTheme
+import android.widget.AdapterView.OnItemSelectedListener
+import androidx.activity.ComponentActivity
 
-
+class wordCount()
+{
+    fun count(input: String): Int
+    {
+        val words = input.split("\\w+".toRegex())
+        val count = words.count() - 1
+        return count
+    }
+}
 class MainActivity : ComponentActivity() {
 
 
@@ -22,19 +24,60 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main)
         val counterType = resources.getStringArray(R.array.choices)
-        val spinner = findViewById<Spinner>(R.id.spinner)
         val counterInput : EditText = findViewById(R.id.editText)
         val buttonStatus : Button = findViewById(R.id.button1)
-        if(spinner!=null)
+        val answer : TextView = findViewById(R.id.textView)
+        val spinner = findViewById<Spinner>(R.id.spinner)
+        if (spinner != null)
         {
             val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, counterType)
             spinner.adapter = adapter
         }
-        buttonStatus 
-        if(counter_input == null)
-        {
+        spinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long)
+            {
+                when (position) {
+                    0 -> {
+                        buttonStatus.setOnClickListener{
+                            val counterInputError : String = counterInput.text.toString()
+                            if(counterInputError.trim().isEmpty())
+                            {
+                                answer.setTextColor(Color.RED)
+                                answer.text = "Klaida. Įvesties laukas yra tuščias."
+                            }
+                            else
+                            {
+                               answer.setTextColor(Color.BLACK)
+                               answer.text = "Žodžių kiekis duotame tekste: " + wordCount().count(counterInputError).toString()
+                            }
+                        }
+                    }
 
+                    1 -> {
+                        buttonStatus.setOnClickListener{
+                            val counterInputError : String = counterInput.text.toString()
+                            if(counterInputError.trim().isEmpty())
+                            {
+                                answer.setTextColor(Color.RED)
+                                answer.text = "Klaida. Įvesties laukas yra tuščias."
+                            }
+                        }
+                    }
+
+                    else -> {}
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?)
+            {
+                buttonStatus.setOnClickListener {
+                    answer.setTextColor(Color.RED)
+                    answer.text = "Klaida. Nepasirinktas skaičiavimo tipas"
+                }
+            }
         }
+
+
 
     }
 }
